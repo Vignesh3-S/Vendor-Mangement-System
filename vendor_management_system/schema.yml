@@ -1,0 +1,851 @@
+openapi: 3.0.3
+info:
+  title: Vendor Management System
+  version: 1.0.0
+paths:
+  /api-token-auth/:
+    post:
+      operationId: api_token_auth_create
+      tags:
+      - api-token-auth
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
+          description: ''
+  /api/purchase_orders/:
+    get:
+      operationId: api_purchase_orders_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: query
+        name: vendor
+        schema:
+          type: integer
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPurchase_Order_Serializer1List'
+          description: ''
+    post:
+      operationId: api_purchase_orders_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Purchase_Order_Serializer1'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Purchase_Order_Serializer1'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Purchase_Order_Serializer1'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Purchase_Order_Serializer1'
+          description: ''
+  /api/purchase_orders/{po_number}/:
+    get:
+      operationId: api_purchase_orders_retrieve
+      parameters:
+      - in: path
+        name: po_number
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Purchase_Order_Serializer1'
+          description: ''
+    put:
+      operationId: api_purchase_orders_update
+      parameters:
+      - in: path
+        name: po_number
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Purchase_Order_Serializer1'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Purchase_Order_Serializer1'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Purchase_Order_Serializer1'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Purchase_Order_Serializer1'
+          description: ''
+    patch:
+      operationId: api_purchase_orders_partial_update
+      parameters:
+      - in: path
+        name: po_number
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPurchase_Order_Serializer1'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPurchase_Order_Serializer1'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPurchase_Order_Serializer1'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Purchase_Order_Serializer1'
+          description: ''
+    delete:
+      operationId: api_purchase_orders_destroy
+      parameters:
+      - in: path
+        name: po_number
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/purchase_orders/{po_number}/acknowledge/:
+    put:
+      operationId: api_purchase_orders_acknowledge_update
+      parameters:
+      - in: path
+        name: po_number
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Purchase_Order_Serializer2'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Purchase_Order_Serializer2'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Purchase_Order_Serializer2'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Purchase_Order_Serializer2'
+          description: ''
+    patch:
+      operationId: api_purchase_orders_acknowledge_partial_update
+      parameters:
+      - in: path
+        name: po_number
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPurchase_Order_Serializer2'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPurchase_Order_Serializer2'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPurchase_Order_Serializer2'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Purchase_Order_Serializer2'
+          description: ''
+  /api/schema/:
+    get:
+      operationId: api_schema_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - yaml
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - ckb
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - ms
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/user/:
+    post:
+      operationId: api_user_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User_'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User_'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User_'
+        required: true
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_'
+          description: ''
+  /api/vendors/:
+    get:
+      operationId: api_vendors_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedVendor_List'
+          description: ''
+    post:
+      operationId: api_vendors_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vendor_'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Vendor_'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Vendor_'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vendor_'
+          description: ''
+  /api/vendors/{vendor_code}/:
+    get:
+      operationId: api_vendors_retrieve
+      parameters:
+      - in: path
+        name: vendor_code
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vendor_'
+          description: ''
+    put:
+      operationId: api_vendors_update
+      parameters:
+      - in: path
+        name: vendor_code
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vendor_'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Vendor_'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Vendor_'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vendor_'
+          description: ''
+    patch:
+      operationId: api_vendors_partial_update
+      parameters:
+      - in: path
+        name: vendor_code
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedVendor_'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedVendor_'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedVendor_'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vendor_'
+          description: ''
+    delete:
+      operationId: api_vendors_destroy
+      parameters:
+      - in: path
+        name: vendor_code
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/vendors/{vendor_code}/performance/:
+    get:
+      operationId: api_vendors_performance_retrieve
+      parameters:
+      - in: path
+        name: vendor_code
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+components:
+  schemas:
+    AuthToken:
+      type: object
+      properties:
+        username:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+        token:
+          type: string
+          readOnly: true
+      required:
+      - password
+      - token
+      - username
+    PaginatedPurchase_Order_Serializer1List:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Purchase_Order_Serializer1'
+    PaginatedVendor_List:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Vendor_'
+    PatchedPurchase_Order_Serializer1:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        po_number:
+          type: string
+          maxLength: 6
+        order_date:
+          type: string
+          format: date-time
+        items: {}
+        quantity:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        status:
+          $ref: '#/components/schemas/StatusEnum'
+        expected_delivery_date:
+          type: string
+          format: date-time
+        quality_rating:
+          type: number
+          format: double
+          nullable: true
+        issue_date:
+          type: string
+          format: date-time
+          readOnly: true
+        acknowledgment_date:
+          type: string
+          format: date-time
+          nullable: true
+        vendor:
+          type: integer
+    PatchedPurchase_Order_Serializer2:
+      type: object
+      properties:
+        acknowledgment_date:
+          type: string
+          format: date-time
+          nullable: true
+        po_number:
+          type: string
+          maxLength: 6
+        status:
+          $ref: '#/components/schemas/StatusEnum'
+        issue_date:
+          type: string
+          format: date-time
+          readOnly: true
+    PatchedVendor_:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 30
+        contact_details:
+          type: string
+          maxLength: 150
+        address:
+          type: string
+          maxLength: 200
+        vendor_code:
+          type: string
+          maxLength: 6
+        on_time_delivery_rate:
+          type: number
+          format: double
+        quality_rating_avg:
+          type: number
+          format: double
+          title: Quality rating Average
+        average_response_time:
+          type: number
+          format: double
+        fulfillment_rate:
+          type: number
+          format: double
+    Purchase_Order_Serializer1:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        po_number:
+          type: string
+          maxLength: 6
+        order_date:
+          type: string
+          format: date-time
+        items: {}
+        quantity:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        status:
+          $ref: '#/components/schemas/StatusEnum'
+        expected_delivery_date:
+          type: string
+          format: date-time
+        quality_rating:
+          type: number
+          format: double
+          nullable: true
+        issue_date:
+          type: string
+          format: date-time
+          readOnly: true
+        acknowledgment_date:
+          type: string
+          format: date-time
+          nullable: true
+        vendor:
+          type: integer
+      required:
+      - expected_delivery_date
+      - id
+      - issue_date
+      - items
+      - order_date
+      - quantity
+      - status
+      - vendor
+    Purchase_Order_Serializer2:
+      type: object
+      properties:
+        acknowledgment_date:
+          type: string
+          format: date-time
+          nullable: true
+        po_number:
+          type: string
+          maxLength: 6
+        status:
+          $ref: '#/components/schemas/StatusEnum'
+        issue_date:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - issue_date
+      - status
+    StatusEnum:
+      enum:
+      - Pending
+      - Completed
+      - Canceled
+      type: string
+      description: |-
+        * `Pending` - Pending
+        * `Completed` - Completed
+        * `Canceled` - Canceled
+    User_:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        password:
+          type: string
+          writeOnly: true
+          description: create a strong passsword using alphanumerics and special characters.
+        confirm_password:
+          type: string
+          writeOnly: true
+          description: same as in the password field.
+      required:
+      - confirm_password
+      - password
+      - username
+    Vendor_:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 30
+        contact_details:
+          type: string
+          maxLength: 150
+        address:
+          type: string
+          maxLength: 200
+        vendor_code:
+          type: string
+          maxLength: 6
+        on_time_delivery_rate:
+          type: number
+          format: double
+        quality_rating_avg:
+          type: number
+          format: double
+          title: Quality rating Average
+        average_response_time:
+          type: number
+          format: double
+        fulfillment_rate:
+          type: number
+          format: double
+      required:
+      - address
+      - contact_details
+      - id
+      - name
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"
