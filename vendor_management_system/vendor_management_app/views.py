@@ -56,6 +56,7 @@ class Update_Purchase_Order(generics.RetrieveUpdateDestroyAPIView):
 class Performance_History(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
+    serializer_class = Historical_Performance_Serializer
     def get(self,request,vendor_code,format=None):
         try:
             vendor = Vendor.objects.get(vendor_code = vendor_code)

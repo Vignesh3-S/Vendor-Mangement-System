@@ -29,7 +29,7 @@ class User_Serializer(serializers.ModelSerializer):
 class Vendor_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Vendor
-        fields = '__all__'
+        fields = ('name','contact_details','address','vendor_code',)
     
     def create(self,data):
         data['vendor_code'] = random.randrange(100000,1000000)
